@@ -1,4 +1,8 @@
 import React, {Component} from 'react'
+import {rootUrl} from '../../config/constants'
+import axios from 'axios'
+
+
 
 class SignUp extends Component{
     constructor(){
@@ -8,9 +12,10 @@ class SignUp extends Component{
             lastName: '',
             email: '',
             username: '',
-            password: '',
+            password1: '',
+            password2: '',
             city: '',
-            profilePicUrl: '#'
+            profilePic: '#'
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -18,16 +23,29 @@ class SignUp extends Component{
 
     onFormSubmit(e){
         e.preventDefault();
-        let newUser  ={
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-            username: this.username,
-            city: this.city,
-            profilePicUrl: this.profilePicUrl
-            
+        if(this.state.password1 !== this.state.password2){
+            console.log('Passwords do not match');
+        } else{
+            axios.post(`${rootUrl}/user/signup`,
+            {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            username: this.state.username,
+            city: this.state.city,
+            profilePic: this.state.profilePic,
+            password: this.state.password1     
+            }
+        )
+        .then((res)=>{
+            console.log(res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
         }
-        console.log(`New User: ${newUser}`)
+        
+        
     }
 
     handleInputChange(e){
@@ -43,7 +61,6 @@ class SignUp extends Component{
     }
 
     render(){
-        console.log('connected')
         return(
             <form className="signupForm" onSubmit={this.onFormSubmit}>
                 <input type="text" required placeholder="First Name" id="firstName" name="firstName" onChange={this.handleInputChange}/>
@@ -52,7 +69,7 @@ class SignUp extends Component{
                 <input type="text" required placeholder="Username" id="username" name="username" onChange={this.handleInputChange}/>
                 <input type="password" required placeholder="Password" id="password1" name="password1" onChange={this.handleInputChange}/>
                 <input type="password" required placeholder="Re-enter Password" id="password2" name="password2" onChange={this.handleInputChange}/>
-                <input type="text" required placeholder="Profile Pic URL" id="profilePicUrl" name="profilePicUrl" onChange={this.handleInputChange}/>
+                <input type="text" required placeholder="Profile Pic" id="profilePic" name="profilePic" onChange={this.handleInputChange}/>
                 <input type="text" required placeholder="Your City" id="city" name="city" onChange={this.handleInputChange}/>
                 <input type="submit" placeholder="Sign Up!/"/>
             </form>
