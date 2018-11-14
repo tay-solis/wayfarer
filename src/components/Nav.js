@@ -5,12 +5,20 @@ class Nav extends Component{
     render(){
         return(
             <nav>
-                <Link to={'/'}><h1>Wayfarer</h1></Link>
-                
-                <ul>
-                    <li><Link to={'/signup'}>Sign Up</Link></li>                
-                    <li><Link to={'/login'}>Log In</Link></li> 
-                </ul>
+                <Link to={'/'}><h1>Wayfarer</h1></Link>          
+                {
+                    this.props.isAuthed
+                    ?
+                    <ul>
+                        <li><span onClick={this.props.handleLogout} to="/">Logout</span></li>                 
+                    </ul>
+                    :
+                    <ul>
+                        <li><Link to={'/signup'}>Sign Up</Link></li>                
+                        <li><Link to={'/login'}>Log In</Link></li>
+                    </ul>
+                         
+                }           
             </nav>
         )
     }

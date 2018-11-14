@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {rootUrl} from '../../config/constants'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../../utils/setAuthToken';
 
 
 
@@ -20,6 +22,16 @@ class Login extends Component{
         axios.post(`${rootUrl}/user/login`, {username: this.state.username, password: this.state.password})
         .then((res)=>{
             console.log(res.data)
+            const { token } = res.data;
+            // Save to LocalStorage
+            localStorage.setItem('jwtToken', token);
+            // Set token to Auth Header
+            setAuthToken(token);
+            // Decode token to get user data
+            const decoded = jwt_decode(token);
+            // Set current user
+            this.props.setCurrentUser(decoded);
+            this.props.history.push('/');
         })
         .catch((err)=>{
             console.log(err)

@@ -1,43 +1,43 @@
+
 import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import './App.css';
 
-import Routes from './config/routes'
 import Nav from './components/Nav'
-
+import Home from './components/Home'
+import SignUp from './components/accounts/SignUp'
+import Login from './components/accounts/Login'
 
 class App extends Component {
-
   state = {
     currentUser: {},
     isAuthenticated: true,
+}
+componentDidMount() {
+  let token;
+  if(localStorage.getItem('jwtToken') === null) {
+    this.setState({ isAuthenticated: false })
+  } else {
+    token = jwt_decode(localStorage.getItem('jwtToken'));
+    setAuthToken(localStorage.jwtToken);
+    this.setState({ currentUser: token, isAuthenticated: true });
   }
+}
 
-  componentDidMount() {
-    let token;
-    if(localStorage.getItem('jwtToken') === null) {
-      this.setState({ isAuthenticated: false })
-    } else {
-      token = jwt_decode(localStorage.getItem('jwtToken'));
-      setAuthToken(localStorage.jwtToken);
-      this.setState({ currentUser: token, isAuthenticated: true });
-    }
-  }
+setCurrentUser = (userData) => {
+  // console.log(userData);
+  this.setState({ currentUser: userData, isAuthenticated: true })
+}
 
-  setCurrentUser = (userData) => {
-    // console.log(userData);
-    this.setState({ currentUser: userData, isAuthenticated: true })
+handleLogout = () => {
+  if(localStorage.getItem('jwtToken') !== null) {
+    localStorage.removeItem('jwtToken');
+    this.setState({ currentUser: null, isAuthenticated: false });
+    // <Redirect to='/' />;
   }
+}
 
-  handleLogout = () => {
-    if(localStorage.getItem('jwtToken') !== null) {
-      localStorage.removeItem('jwtToken');
-      this.setState({ currentUser: null, isAuthenticated: false });
-      // <Redirect to='/' />;
-    }
-  }
   
   render() {
     console.log('Current User = ', this.state.currentUser);
@@ -53,8 +53,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Nav />
-        { Routes }
+        <Nav handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
+        <Switch>  
+          <Route path="/signup" component={ SignUp }/> 
+          <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
+          <Route path="/" component={ Home }/>
+          {/* <PrivateRoute path='/profile' component={ Profile } />    */}
+        </Switch>
       </div>
     );
   }
