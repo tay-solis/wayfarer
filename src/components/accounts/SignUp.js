@@ -26,17 +26,21 @@ class SignUp extends Component{
         if(this.state.password1 !== this.state.password2){
             console.log('Passwords do not match');
         } else{
-            axios.post(`${rootUrl}/user/signup`,
-            {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            username: this.state.username,
-            city: this.state.city,
-            profilePic: this.state.profilePic,
-            password: this.state.password1     
-            }
-        )
+            let newUser = new FormData();
+            newUser.append('firstName', this.state.firstName);
+            newUser.append('lastName', this.state.lastName);
+            newUser.append('username', this.state.username);
+            newUser.append('email', this.state.email);
+            newUser.append('city', this.state.city);
+            newUser.append('password', this.state.password1);
+            newUser.append('profilePic', this.state.profilePic);
+            console.log(newUser.get('profilePic'))
+            axios({
+                method: 'POST',
+                url: `${rootUrl}/user/signup`,
+                data: newUser,
+                config: { headers: {'Content-Type': 'multipart/form-data' }}
+            })
         .then((res)=>{
             console.log('submitted')
             console.log(res.data)
@@ -62,7 +66,6 @@ class SignUp extends Component{
 
     handleInputChange(e){
         e.preventDefault();
-        console.log(e)
         const target = e.target;
         const value = target.value;
         const name = target.name;
@@ -73,9 +76,9 @@ class SignUp extends Component{
 
     render(){
         return(
-            <form encType="multipart/form-data"  className="signupForm" onSubmit={this.onFormSubmit}>
+            <form  encType="multipart/form-data"  id="signupForm" onSubmit={this.onFormSubmit}>
                 <label htmlFor="profilePic">Upload a Profile Picture</label>
-                <input type="file" required accept="image/*" required placeholder="Profile Pic" id="profilePic" name="profilePic" onChange={this.handleFileUpload}/>
+                <input type="file" accept="image/*" required placeholder="Profile Pic" id="profilePic" name="profilePic" onChange={this.handleFileUpload}/>
 
                 <input type="text" required placeholder="First Name" id="firstName" name="firstName" onChange={this.handleInputChange}/>
                 <input type="text" required placeholder="Last Name" id="lastName" name="lastName" onChange={this.handleInputChange}/>
