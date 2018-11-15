@@ -53,7 +53,7 @@ handleLogout = () => {
 
     return (
       <div className="App">
-        <Nav handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
+        <Nav currentUser={this.state.currentUser} handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
         <Switch>  
           <Route path="/signup" component={ SignUp }/> 
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />

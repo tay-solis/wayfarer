@@ -1,0 +1,12 @@
+.navIconContainer{
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.navIcon{
+    max-width: 100px;
+}

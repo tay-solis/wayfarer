@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
+import {rootUrl} from '../config/constants'
 
 class Nav extends Component{
     render(){
@@ -10,6 +11,12 @@ class Nav extends Component{
                     this.props.isAuthed
                     ?
                     <ul>
+                        <li>
+                            <div className="navIconContainer">
+                                <img className="navIcon" alt={`user icon for ${this.props.currentUser.username}`} src={`${rootUrl}/${this.props.currentUser.profilePic}`}/> 
+                            </div> 
+                            Hello, {this.props.currentUser.firstName}!
+                        </li>
                         <li><span onClick={this.props.handleLogout} to="/">Logout</span></li>                 
                     </ul>
                     :
