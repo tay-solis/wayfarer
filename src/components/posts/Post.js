@@ -1,13 +1,65 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
+import axios from 'axios'
+import {rootUrl} from '../../config/constants'
 
 class Post extends Component{
+    constructor(){
+        super()
+        this.state ={
+            title: '',
+            content: '',
+            postedOn: null,
+            user: null
+        }
+    }
+
+    componentDidMount(){
+
+        if (this.props.match){
+            console.log(`${rootUrl}/posts/post/${this.props.match.params.id}`)
+            axios.get(`${rootUrl}/posts/post/${this.props.match.params.id}`)
+            .then((res)=>{
+                console.log(res.data)
+                this.setState({
+                    title: res.data.title,
+                    content: res.data.content,
+                    postedOn: res.data.postedOn,
+                    user: res.data.user
+                })
+            })
+        } else{
+            this.setState({
+                title: this.props.title,
+                content: this.props.content,
+                postedOn: this.props.postedOn,
+                user: this.props.user
+            })
+        }
+    }
+
     render(){
         return(
             <article>
-                <h2>{this.props.title}</h2>
-                <p className="author">By {this.props.user.username}</p>
-                <p className="postDate">{this.props.postedOn}</p>
-                <p>{this.props.content}</p>
+                {this.props.id && 
+                    <Link 
+                        to={`../post/${this.props.id}`}>
+                        <h2>{this.state.title}</h2>
+                    </Link>
+                }
+                {!this.state.id &&
+                <h2>{this.state.title}</h2>
+                }
+                {this.state.user &&
+                <div className="subtitle">
+                    <p className="author">By 
+                    <Link to={`../profile/${this.state.user.username}`}>
+                        {this.state.user.username}
+                    </Link></p>
+                    <p className="postDate">{this.state.postedOn}</p>  
+                </div>    
+                }
+                <p>{this.state.content}</p>
             </article>
         )
     }

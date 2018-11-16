@@ -10,6 +10,7 @@ import SignUp from './components/accounts/SignUp'
 import Login from './components/accounts/Login'
 import Profile from './components/profile/Profile'
 import PostForm from './components/posts/PostForm'
+import Post from './components/posts/Post'
 
 class App extends Component {
   state = {
@@ -59,8 +60,8 @@ handleLogout = () => {
         <Switch>  
           <Route path="/signup" component={ SignUp }/> 
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
-          {/* <PrivateRoute path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } /> */}
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
+          <Route path='/post/:id' component={Post}/>
           <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
             
