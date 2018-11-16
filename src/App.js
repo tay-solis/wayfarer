@@ -8,6 +8,7 @@ import Nav from './components/Nav'
 import Home from './components/Home'
 import SignUp from './components/accounts/SignUp'
 import Login from './components/accounts/Login'
+import Profile from './components/profile/Profile'
 
 class App extends Component {
   state = {
@@ -57,8 +58,9 @@ handleLogout = () => {
         <Switch>  
           <Route path="/signup" component={ SignUp }/> 
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
+          <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
-          {/* <PrivateRoute path='/profile' component={ Profile } />    */}
+            
         </Switch>
       </div>
     );

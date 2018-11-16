@@ -27,6 +27,8 @@ class SignUp extends Component{
             console.log('Passwords do not match');
         } else{
             let newUser = new FormData();
+            let date = new Date();
+            let joinDate = date.toLocaleDateString();
             newUser.append('firstName', this.state.firstName);
             newUser.append('lastName', this.state.lastName);
             newUser.append('username', this.state.username);
@@ -34,7 +36,7 @@ class SignUp extends Component{
             newUser.append('city', this.state.city);
             newUser.append('password', this.state.password1);
             newUser.append('profilePic', this.state.profilePic);
-            console.log(newUser.get('profilePic'))
+            newUser.append('joinDate', joinDate);
             axios({
                 method: 'POST',
                 url: `${rootUrl}/user/signup`,
