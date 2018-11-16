@@ -23,7 +23,7 @@ class Profile extends Component{
         .catch((err)=>{
             console.log(err);
         })
-        axios.get(`${rootUrl}/posts/${username}`)
+        axios.get(`${rootUrl}/posts/author/${username}`)
         .then((res)=>{
             this.setState({
                 posts: res.data
@@ -40,6 +40,7 @@ class Profile extends Component{
             {!this.state.user && <p>Loading...</p>}
             {this.state.user &&
             <section className="profileHeader">
+                <img className="profilePicture" alt={`Profile Picture for ${this.state.user.username}`} src={`${rootUrl}/${this.state.user.profilePic}`}/> 
                 <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
                 <h2>Hometown: {this.state.user.city}</h2>
                 <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>

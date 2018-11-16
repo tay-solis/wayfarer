@@ -11,6 +11,8 @@ import Login from './components/accounts/Login'
 import Profile from './components/profile/Profile'
 import PostForm from './components/posts/PostForm'
 import Post from './components/posts/Post'
+import CityForm from './components/city/CityForm'
+import City from './components/city/City'
 
 class App extends Component {
   state = {
@@ -62,6 +64,8 @@ handleLogout = () => {
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
           <Route path='/post/:id' component={Post}/>
+          <Route path='/addcity' component={CityForm}/>
+          <Route path='/city/:name' component={City}/>
           <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
             
