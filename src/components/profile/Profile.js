@@ -17,8 +17,16 @@ class Profile extends Component{
         axios.get(`${rootUrl}/user/${username}`)
         .then((res)=>{
             this.setState({
-                user: res.data.user,
-                posts: res.data.posts
+                user: res.data
+            })
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+        axios.get(`${rootUrl}/posts/${username}`)
+        .then((res)=>{
+            this.setState({
+                posts: res.data
             })
         })
         .catch((err)=>{
@@ -36,8 +44,8 @@ class Profile extends Component{
                 <h2>Hometown: {this.state.user.city}</h2>
                 <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
             </section> }
-            {this.state.user && this.state.user.posts.length > 0 &&
-                <Posts user={this.state.user} posts={this.state.posts}/>
+            {this.state.posts && this.state.posts.length > 0 &&
+                <Posts posts={this.state.posts}/>
             }
         </main>
         )

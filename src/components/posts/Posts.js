@@ -12,7 +12,7 @@ class Posts extends Component{
     componentDidMount(){
         let posts = [];
         for(let i = 0; i < this.props.posts.length; i++){
-            posts.push(<Post title={this.props.posts[i].title} content={this.props.posts[i].content} postedOn={this.props.posts[i].postedOn} user={this.props.user}/>)
+            posts.push(<Post title={this.props.posts[i].title} content={this.props.posts[i].content} postedOn={this.props.posts[i].postedOn} user={this.props.posts[i].user}/>)
         }
         this.setState({
             posts
