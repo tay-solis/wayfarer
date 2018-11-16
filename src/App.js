@@ -9,12 +9,13 @@ import Home from './components/Home'
 import SignUp from './components/accounts/SignUp'
 import Login from './components/accounts/Login'
 import Profile from './components/profile/Profile'
+import PostForm from './components/posts/PostForm'
 
 class App extends Component {
   state = {
     currentUser: {},
     isAuthenticated: true,
-}
+  }
 componentDidMount() {
   let token;
   if(localStorage.getItem('jwtToken') === null) {
@@ -58,6 +59,8 @@ handleLogout = () => {
         <Switch>  
           <Route path="/signup" component={ SignUp }/> 
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
+          {/* <PrivateRoute path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } /> */}
+          <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
           <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
             

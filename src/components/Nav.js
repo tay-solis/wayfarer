@@ -17,7 +17,8 @@ class Nav extends Component{
                             </div> 
                             Hello, {this.props.currentUser.firstName}!
                         </li>
-                        <li><Link to={`/profile/${this.props.currentUser.username}`}>My Profile</Link></li>  
+                        <li><Link to={`/profile/${this.props.currentUser.username}`}>My Profile</Link></li> 
+                        <li><Link to={`/addpost`}>Add a Post</Link></li> 
                         <li><span onClick={this.props.handleLogout} to="/">Logout</span></li>                 
                     </ul>
                     :

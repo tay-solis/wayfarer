@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {rootUrl} from '../../config/constants'
 import axios from 'axios'
+import Posts from '../posts/Posts'
 
 class Profile extends Component{
     constructor(){
         super();
         this.state ={
-            user: null
+            user: null,
+            posts: []
         }
     }
 
@@ -15,7 +17,8 @@ class Profile extends Component{
         axios.get(`${rootUrl}/user/${username}`)
         .then((res)=>{
             this.setState({
-                user: res.data
+                user: res.data.user,
+                posts: res.data.posts
             })
         })
         .catch((err)=>{
@@ -33,10 +36,8 @@ class Profile extends Component{
                 <h2>Hometown: {this.state.user.city}</h2>
                 <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
             </section> }
-            {this.state.user && this.state.user.posts.length === 0 &&
-                <section className="posts">
-                <h1>This user doesn't have any posts!</h1>
-                </section>
+            {this.state.user && this.state.user.posts.length > 0 &&
+                <Posts user={this.state.user} posts={this.state.posts}/>
             }
         </main>
         )
