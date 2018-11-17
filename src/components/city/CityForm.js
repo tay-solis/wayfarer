@@ -22,6 +22,7 @@ class CityForm extends Component{
         } else{
             let newCity = new FormData();
             newCity.append('name', this.state.name);
+            newCity.append('country', this.state.country);
             newCity.append('photo', this.state.photo);
             
             axios({
@@ -33,6 +34,8 @@ class CityForm extends Component{
         .then((res)=>{
             console.log('submitted')
             console.log(res.data)
+            this.props.history.push(`../cities`);
+
         })
         .catch((err)=>{
             console.log('denied')
@@ -69,6 +72,7 @@ class CityForm extends Component{
                 <label htmlFor="photo">Upload a Photo</label>
                 <input type="file" accept="image/*" required placeholder="Photo" id="photo" name="photo" onChange={this.handleFileUpload}/>
                 <input type="text" required placeholder="New City" id="name" name="name" onChange={this.handleInputChange}/>
+                <input type="text" required placeholder="Country" id="country" name="country" onChange={this.handleInputChange}/>
                 <input type="submit" placeholder="Travel!/"/>
             </form>
         )

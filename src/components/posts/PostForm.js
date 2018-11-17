@@ -44,6 +44,8 @@ class PostForm extends Component{
         axios.post(`${rootUrl}/posts/create`, newPost)
             .then((res)=>{
                 console.log(res)
+                this.props.history.push(`/`);
+
             })
     }
       

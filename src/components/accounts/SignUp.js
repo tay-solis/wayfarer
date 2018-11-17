@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {rootUrl} from '../../config/constants'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../../utils/setAuthToken';
 
 class SignUp extends Component{
     constructor(){
@@ -44,8 +46,7 @@ class SignUp extends Component{
                 config: { headers: {'Content-Type': 'multipart/form-data' }}
             })
         .then((res)=>{
-            console.log('submitted')
-            console.log(res.data)
+                this.props.history.push('/login');
         })
         .catch((err)=>{
             console.log('denied')

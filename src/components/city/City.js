@@ -11,10 +11,12 @@ class City extends Component{
             posts: [],
             headerStyle: {}
         }
+        this.fetchData = this.fetchData.bind(this)
     }
 
-    componentDidMount(){
-        let city = this.props.match.params.name;
+    fetchData(){
+        let city = this.props.name;
+        console.log(`current City: ${city}`)
         axios.get(`${rootUrl}/city/${city}`)
         .then((res)=>{
             console.log('retrieved')
@@ -34,6 +36,15 @@ class City extends Component{
         .catch((err)=>{
             console.log(err);
         })
+    }
+
+    componentDidMount(){
+        this.fetchData();
+        
+    }
+
+    componentWillReceiveProps(){
+        this.fetchData();
     }
 
     render(){

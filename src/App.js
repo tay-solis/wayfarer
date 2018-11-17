@@ -8,9 +8,11 @@ import Nav from './components/Nav'
 import Home from './components/Home'
 import SignUp from './components/accounts/SignUp'
 import Login from './components/accounts/Login'
+import AuthForms from './components/accounts/AuthForms'
 import Profile from './components/profile/Profile'
 import PostForm from './components/posts/PostForm'
 import Post from './components/posts/Post'
+import CitiesContainer from './containers/CitiesContainer'
 import CityForm from './components/city/CityForm'
 import City from './components/city/City'
 
@@ -60,12 +62,14 @@ handleLogout = () => {
       <div className="App">
         <Nav currentUser={this.state.currentUser} handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
         <Switch>  
-          <Route path="/signup" component={ SignUp }/> 
+        <Route path="/authForms" render={ (props) => <AuthForms {...props} setCurrentUser={this.setCurrentUser} /> }/>
+          <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} /> }/>  
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
           <Route path='/post/:id' component={Post}/>
-          <Route path='/addcity' component={CityForm}/>
+          <Route path='/addcity' render={(props) => <CityForm {...props} /> }/>
           <Route path='/city/:name' component={City}/>
+          <Route path='/cities' component={CitiesContainer}/>
           <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
             
