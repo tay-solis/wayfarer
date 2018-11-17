@@ -35,7 +35,7 @@ class Login extends Component{
         })
         .catch((err)=>{
             console.log(err)
-        })   
+        })
     }
 
     handleInputChange(e){
@@ -46,16 +46,22 @@ class Login extends Component{
         this.setState({
             [name]: value
         });
-        
+
 
     }
 
     render(){
         return(
             <form className="LoginForm" onSubmit={this.onFormSubmit}>
-                <input required type="text" required placeholder="Username" id="username" name="username" onChange={this.handleInputChange}/>
-                <input required type="password" required placeholder="Password" id="password" name="password" onChange={this.handleInputChange}/>
-                <input type="submit" placeholder="Sign Up!/"/>
+                <div className="inputField">
+                    <label htmlFor="username">username</label>
+                    <input required type="text" required placeholder="Username" id="username" name="username" onChange={this.handleInputChange}/>
+                </div>
+                <div className="inputField">
+                    <label htmlFor="password">password</label>
+                    <input required type="password" required placeholder="Password" id="password" name="password" onChange={this.handleInputChange}/>
+                </div>
+                <input id="submit" type="submit" placeholder="Sign Up!/"/>
             </form>
         )
     }

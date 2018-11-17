@@ -13,7 +13,10 @@ class CityLink extends Component{
     render(){
         return(
             <div className="cityLink" id={this.props.name} onClick={this.setCurrentCity}>
+              <div className="cityLinkImg">
                 <img src={this.props.photo} onClick={this.setCurrentCity}/>
+              </div>
+
                 <h2 onClick={this.setCurrentCity}>{this.props.name} </h2>
             </div>
         )

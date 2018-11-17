@@ -1,12 +1,354 @@
+/*
+Colors:
+light-blue: #94DACA;
+blue:  #65b6be;
+dark-blue: #2F4858;
+
+*/
+
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  padding: 0;
+  color: #2F4858;
+  background-color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/*
+Typography
+*/
+
+h1,h2,h3,h4,h5{
+  font-family: 'Raleway', sans-serif;
+}
+
+a{
+  font-family: 'Raleway', sans-serif;
+}
+
+a:hover{
+  color: #94DACA;
+}
+
+i{
+  font-size: 2em;
+}
+
+h1{
+  font-size: 2.5em;
+  margin: 0;
+  text-align: center;
+}
+
+ul{
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button{
+  padding: .5em .75em;
+  margin: 1em;
+  font-size: inherit;
+  border-radius: 2px;
+  border: none;
+  background-color: #2F4858;
+  color: #FFF;
+  font-family: 'Raleway', sans-serif;
+}
+
+
+/*
+NavBar
+*/
+
+nav{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1em;
+  background-color: #4D808C;
+  color:  #FFF;
+  position: fixed;
+  top: 0;
+  height: 90px;
+  z-index: 999;
+}
+
+nav a{
+  color: #ffffff;
+  text-decoration: none;
+}
+
+nav a h1{
+  color: #2F4858;
+}
+
+nav ul{
+  padding: 0 1em;
+}
+
+nav li{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 .5em;
+}
+
+.logo{
+  width: 50px;
+  height: 50px;
+}
+
+.navTitle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.navTitle h1{
+  margin: 0 .5em;
+  font-size: 2em;
+}
+
+.navRoom{
+  margin-top: 6em;
+  /* padding-top: 6em;
+  position: relative;
+  top: 0; */
+}
+
 .navIconContainer{
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 .5em;
 }
+
 .navIcon{
-    max-width: 100px;
+    max-width: 100%;
+}
+
+/* Pop Ups */
+
+.popUp{
+  display: none;
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  margin-left: -225px;
+  width: 450px;
+  padding: 3em;
+  background-color: #FFF;
+  -o-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  -moz-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  z-index: 9999;
+}
+
+.popUpClose{
+  position: relative;
+  left: -1em;
+  top: -1em;
+}
+
+.logInPopUp{
+  display: block;
+}
+.signUpPopUp{
+  display: none;
+}
+
+.logInPopUp, .addPostPopUp, .addCityPopUp{
+  display: none;
+  z-index: 999;
+}
+/* Home Page*/
+
+.home header{
+  height: 60vh;
+  width: 100%;
+  background-image: url('./images/home1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+section{
+  padding: 1.25em 2em;
+  background-color: #FFF;
+}
+
+.aboutParagraphs{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.aboutParagraphs article{
+  width: 30%;
+  background-color: #FFF;
+}
+
+/* Form */
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+form p{
+  text-align: center;
+}
+
+input{
+  margin: .5em;
+  padding: .25em .5em;
+  font-size: inherit;
+  border-radius: 2px;
+  border: 2px solid  #94DACA;
+}
+
+input[type=submit]{
+  padding: .5em;
+  border: none;
+  background-color: #2F4858;
+  color: #FFF;
+  font-family: 'Raleway', sans-serif;
+}
+
+.inputField{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.error{
+  border: 3px solid #de5632;
+}
+
+.toggleSignUp{
+  color:#65b6be;
+  transition: all 1s;
+}
+
+.toggleSignUp:hover{
+  position: relative;
+  top: -3px;
+  color: #94DACA;
+}
+
+.logInPopUp{
+  text-align: center;
+}
+
+/* Profile */
+
+.profileHeader{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profileHeader >*{
+  margin: 0 4em;
+}
+
+.profilePicContainer{
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.profilePic{
+  width: 100%;
+}
+
+/* Cities */
+.citiesContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.cityNav{
+  width: 450px;
+  background-color: #94DACA;
+  text-align: center;
+  height: 89vh;
+  z-index: 998;
+  overflow: scroll;
+  position: absolute;
+  left: 0;
+  top: 11vh;
+}
+
+.cityLink{
+  width: 80%;
+  min-height: 150px;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  margin: 1em auto;
+  background-color: rgba(255, 255, 255,.9);
+  -o-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  -moz-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+}
+
+.cityLink>*{
+  margin: .5em;
+}
+
+.cityLinkImg{
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cityLinkImg img{
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.currentCity{
+  position: absolute;
+  top: 11vh;
+  height: 89vh;
+  overflow: scroll;
+  width: 60%;
+  /* z-index: -1; */
+}
+
+.currentCity img{
+  max-width: 40%;
 }

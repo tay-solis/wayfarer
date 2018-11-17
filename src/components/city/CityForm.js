@@ -7,18 +7,30 @@ class CityForm extends Component{
         super()
         this.state ={
             name: '',
-            photo: '#'
+            country: '',
+            photo: '#',
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.isValidName = this.isValidName.bind(this);
+    }
+
+    isValidName(str){
+        return this.props.isValidName(str);
     }
 
     onFormSubmit(e){
         e.preventDefault();
         console.log(typeof this.state.photo)
-        if(this.state.password1 !== this.state.password2){
-            console.log('Passwords do not match');
+        if(!this.isValidName(this.state.name)){
+            console.log('Invalid City Name');
+            let cityInput = document.getElementById('name');
+            cityInput.classList.add('error');
+        }else if(!this.isValidName(this.state.country)){
+            let countryInput = document.getElementById('country');
+            countryInput.classList.add('error');
+            console.log('Invalid Country Name');
         } else{
             let newCity = new FormData();
             newCity.append('name', this.state.name);

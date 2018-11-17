@@ -20,14 +20,14 @@ class CitiesContainer extends Component{
     componentDidMount(){
         axios.get(`${rootUrl}/city/all`)
         .then((res)=>{
-            
-            let cities =[]
+            let currentCity = '';
+            let cities =[];
             for(let i = 0; i < res.data.length; i++){
-                
+                if (i === 0) currentCity = res.data[0].name;
                 cities.push(res.data[i])
             }
-            let currentCity = cities[0].name
-            let cityNav = <CityNav cities={cities} setCurrentCity={this.setCurrentCity} />
+
+            let cityNav = <CityNav cities={cities} setCurrentCity={this.setCurrentCity} isValidName={this.props.isValidName}/>
             console.log()
             this.setState({
                 cities,
@@ -50,14 +50,14 @@ class CitiesContainer extends Component{
                 <section className="currentCity">
                     {this.state.currentCity
                     &&
-                    <City name={this.state.currentCity}/>
+                    <City {...this.props} name={this.state.currentCity} currentUser={this.props.currentUser}/>
                     }
                 </section>
-                
+
                 {!this.state.cities
                 &&
                 <p>Loading...</p>}
-                
+
             </div>
         )
     }

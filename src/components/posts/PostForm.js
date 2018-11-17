@@ -12,24 +12,28 @@ class PostForm extends Component{
           content: ' ',
           city: '',
           cities: null,
+          user: null
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
       }
-    
+
     componentDidMount(){
         axios.get(`${rootUrl}/city/all`)
         .then((res)=>{
+            let city = "";
             let cities =[]
             for(let i = 0; i < res.data.length; i++){
+                if(i === 0) city = res.data[i].name;
                 cities.push(<option key={i} value ={res.data[i].name}>{res.data[i].name}</option>)
             }
             this.setState({
-                cities
+                cities,
+                city
             })
         })
     }
-    
+
     onFormSubmit(e){
         e.preventDefault();
 
@@ -43,13 +47,12 @@ class PostForm extends Component{
         console.log(newPost)
         axios.post(`${rootUrl}/posts/create`, newPost)
             .then((res)=>{
-                console.log(res)
-                this.props.history.push(`/`);
-
+                console.log(res);
+                this.props.showPopUp();
             })
     }
-      
-    
+
+
     handleInputChange(e){
         e.preventDefault();
         const target = e.target;
@@ -58,14 +61,12 @@ class PostForm extends Component{
         this.setState({
             [name]: value
         });
-        
-
     }
-      
+
     render(){
         return(
             <form className="postForm" onSubmit={ this.onFormSubmit }>
-            {this.state.cities && this.state.cities.length > 0 
+            {this.state.cities && this.state.cities.length > 0
             &&
             <div className="citySelection">
                 <select name="city" onChange={this.handleInputChange}>
@@ -73,7 +74,7 @@ class PostForm extends Component{
                 </select>
                 Don't see your city? <Link to='/addcity'>Add it here!</Link>
             </div>
-                
+
             }
                 <label htmlFor='title'>Title</label>
                 <input placeholder='Title' type='text' id="title" name="title"  onChange={this.handleInputChange}/>

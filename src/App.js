@@ -45,7 +45,50 @@ handleLogout = () => {
   }
 }
 
-  
+//For Login/Logout Popup
+showPopUp =()=>{
+  let signUpPopUp = document.querySelector('.signUpPopUp');
+  let logInPopUp = document.querySelector('.logInPopUp');
+  let popUp = document.querySelector('.authPopUp');
+  if(popUp.style.display === 'none'){
+    popUp.style.display = "block";
+  } else {
+    popUp.style.display = "none";
+    signUpPopUp.style.display = "none";
+    logInPopUp.style.display = "block";
+  }
+}
+
+toggleSignUp=()=>{
+  let signUpPopUp = document.querySelector('.signUpPopUp');
+  let logInPopUp = document.querySelector('.logInPopUp');
+  signUpPopUp.style.display = "block";
+  logInPopUp.style.display = "none";
+}
+
+//Regex for Forms
+
+isOnlyLettersOrNumbers(str){
+  const alphanumericRegex = new RegExp("/^[a-zA-Z0-9]+$/");
+  return alphanumericRegex.test(str)
+}
+
+isValidName(str){
+  const cityRegex = new RegExp("^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$");
+  return cityRegex.test(str);
+}
+
+isValidPassword(str){
+  const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+  return strongRegex.test(str);
+}
+
+isValidEmail(str){
+  const emailRegex = new RegExp(`	
+  ^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$`);
+  return emailRegex.test(str);
+}
+
   render() {
     console.log('Current User = ', this.state.currentUser);
     console.log('Authenticated = ', this.state.isAuthenticated);
@@ -58,21 +101,39 @@ handleLogout = () => {
       )} />
     )
 
+
+
     return (
       <div className="App">
-        <Nav currentUser={this.state.currentUser} handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
-        <Switch>  
+
+        <Nav showPopUp={this.showPopUp} currentUser={this.state.currentUser} handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
+        {
+              !this.props.isAuthed
+              &&
+        <div className="popUp authPopUp">
+          <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
+          <div className="logInPopUp">
+            <Login {...this.props} setCurrentUser={this.setCurrentUser} />
+            <p>Need an account? <span className="toggleSignUp" onClick={this.toggleSignUp}>Sign Up!</span></p>
+
+          </div>
+          <div className="signUpPopUp">
+            <SignUp {...this.props} setCurrentUser={this.setCurrentUser} />
+          </div>
+        </div>
+      }
+        <Switch>
         <Route path="/authForms" render={ (props) => <AuthForms {...props} setCurrentUser={this.setCurrentUser} /> }/>
-          <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} /> }/>  
+          <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword} isValidName={this.isValidName}/> }/>
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
           <Route path='/post/:id' component={Post}/>
-          <Route path='/addcity' render={(props) => <CityForm {...props} /> }/>
+          <Route path='/addcity' render={(props) => <CityForm {...props} isValidName={this.isValidName}/> }/>
           <Route path='/city/:name' component={City}/>
-          <Route path='/cities' component={CitiesContainer}/>
+          <Route path='/cities' render={(props)=><CitiesContainer {...props} isValidName={this.isValidName} showPopUp={this.showPopUp} currentUser={this.state.currentUser}/>}/>
           <PrivateRoute path='/profile/:username' component={ Profile } />
           <Route path="/" component={ Home }/>
-            
+
         </Switch>
       </div>
     );

@@ -23,6 +23,7 @@ class Post extends Component{
                 console.log(res.data)
                 this.setState({
                     title: res.data.title,
+                    city: res.data.city,
                     content: res.data.content,
                     postedOn: res.data.postedOn,
                     user: res.data.user
@@ -31,6 +32,7 @@ class Post extends Component{
         } else{
             this.setState({
                 title: this.props.title,
+                city: this.props.city,
                 content: this.props.content,
                 postedOn: this.props.postedOn,
                 user: this.props.user
@@ -41,23 +43,24 @@ class Post extends Component{
     render(){
         return(
             <article>
-                {this.props.id && 
-                    <Link 
+                {this.props.id &&
+                    <Link
                         to={`../post/${this.props.id}`}>
                         <h2>{this.state.title}</h2>
                     </Link>
                 }
-                {!this.state.id &&
+                {!this.props.id &&
                 <h2>{this.state.title}</h2>
                 }
                 {this.state.user &&
                 <div className="subtitle">
-                    <p className="author">By 
+                    <h3>{this.state.city.name}</h3>
+                    <p className="author">By
                     <Link to={`../profile/${this.state.user.username}`}>
                         {this.state.user.username}
                     </Link></p>
-                    <p className="postDate">{this.state.postedOn}</p>  
-                </div>    
+                    <p className="postDate">{this.state.postedOn}</p>
+                </div>
                 }
                 <p>{this.state.content}</p>
             </article>

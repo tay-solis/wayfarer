@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {rootUrl} from '../../config/constants'
 import axios from 'axios'
 import Posts from '../posts/Posts'
+import PostForm from '../posts/PostForm'
 
 class City extends Component{
     constructor(){
@@ -40,11 +41,25 @@ class City extends Component{
 
     componentDidMount(){
         this.fetchData();
-        
+
     }
 
     componentWillReceiveProps(){
-        this.fetchData();
+      this.setState({
+        city: null,
+        posts: [],
+      })
+      this.fetchData();
+    }
+
+    showPopUp(){
+      let popUp = document.querySelector('.addPostPopUp');
+      if(popUp.style.display === 'none'){
+        popUp.style.display = "block";
+      } else {
+        popUp.style.display = "none";
+
+      }
     }
 
     render(){
@@ -55,8 +70,13 @@ class City extends Component{
                 <header>
                     <img src={`${rootUrl}/${this.state.city.photo}`}/>
                     <h1>{this.state.city.name}</h1>
+                    <button className="addPost" onClick={this.showPopUp}>Got a Travel Tip?</button>
                 </header>
             }
+            <div className="popUp addPostPopUp">
+              <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
+              <PostForm {...this.props} currentUser={this.props.currentUser} showPopUp={this.showPopUp}/>
+            </div>
             {this.state.posts && this.state.posts.length > 0 &&
                 <Posts posts={this.state.posts}/>
             }

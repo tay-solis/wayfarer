@@ -36,18 +36,26 @@ class Profile extends Component{
 
     render(){
         return(
-        <main className="profile">
+        <main className="profile navRoom">
             {!this.state.user && <p>Loading...</p>}
             {this.state.user &&
             <section className="profileHeader">
-                <img className="profilePicture" alt={`Profile Picture for ${this.state.user.username}`} src={`${rootUrl}/${this.state.user.profilePic}`}/> 
-                <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
-                <h2>Hometown: {this.state.user.city}</h2>
-                <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
+              <div className="profilePicContainer">
+                <img className="profilePic" alt={`Profile Picture for ${this.state.user.username}`} src={`${rootUrl}/${this.state.user.profilePic}`}/>
+              </div>
+
+                <div className="profileInfo">
+                  <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
+                  <h2>Hometown: {this.state.user.city}</h2>
+                  <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
+                </div>
+
             </section> }
             {this.state.posts && this.state.posts.length > 0 &&
                 <Posts posts={this.state.posts}/>
             }
+            {this.state.user && this.state.posts && this.state.posts.length === 0 &&
+            <h1>{this.state.user.firstName} has no posts  ¯\_(ツ)_/¯</h1>}
         </main>
         )
     }
