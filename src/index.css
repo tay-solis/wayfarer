@@ -9,6 +9,10 @@ dark-blue: #2F4858;
 *{
   box-sizing: border-box;
 }
+
+main{
+  margin-top: 90px;
+}
 body{
   margin: 0;
   padding: 0;
@@ -26,14 +30,25 @@ Typography
 
 h1,h2,h3,h4,h5{
   font-family: 'Raleway', sans-serif;
+  margin: .25em 0;
+}
+
+p{
+  margin: 0;
 }
 
 a{
   font-family: 'Raleway', sans-serif;
+  color:#65b6be;
+  transition: all .5s;
+  text-decoration: none;
 }
+
 
 a:hover{
   color: #94DACA;
+  position: relative;
+  top: -3px;
 }
 
 i{
@@ -44,6 +59,10 @@ h1{
   font-size: 2.5em;
   margin: 0;
   text-align: center;
+}
+
+p{
+  white-space: pre-line;
 }
 
 ul{
@@ -84,6 +103,10 @@ nav{
   top: 0;
   height: 90px;
   z-index: 999;
+
+  -o-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  -moz-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
+  box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
 }
 
 nav a{
@@ -141,7 +164,8 @@ nav li{
 }
 
 .navIcon{
-    max-width: 100%;
+    max-width: 150%;
+    max-height: 150%;
 }
 
 /* Pop Ups */
@@ -149,10 +173,10 @@ nav li{
 .popUp{
   display: none;
   position: fixed;
-  top: 15%;
+  top: 10%;
   left: 50%;
-  margin-left: -225px;
-  width: 450px;
+  margin-left: -300px;
+  width: 600px;
   padding: 3em;
   background-color: #FFF;
   -o-box-shadow: 1px 1px 1px rgba(47, 72, 88,0.5);
@@ -163,8 +187,9 @@ nav li{
 
 .popUpClose{
   position: relative;
-  left: -1em;
-  top: -1em;
+  left: -1.5em;
+  top: -1.5em;
+  margin: 0;
 }
 
 .logInPopUp{
@@ -181,7 +206,7 @@ nav li{
 /* Home Page*/
 
 .home header{
-  height: 60vh;
+  height: 50vh;
   width: 100%;
   background-image: url('./images/home1.jpg');
   background-size: cover;
@@ -237,14 +262,53 @@ input[type=submit]{
 .inputField{
   display: flex;
   flex-direction: row;
-  width: 100%;
-  justify-content: space-around;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.inputField label{
+  width: 30%;
+}
+
+.warning{
+  display: hidden;
+  font-size: .75em;
+  line-height: 1.25em;
+  color: #de5632;
+}
+
+.addPostPopUp form{
+  /* align-items: flex-start; */
+}
+
+textarea{
+  margin: .5em;
+  padding: .25em .5em;
+  font-size: inherit;
+  border-radius: 2px;
+  border: 2px solid  #94DACA;
+  width: 100%;
+  height: 15em;
+}
+
+select{
+  width: 100%;
+  text-align: center;
+  font-size: inherit;
+  font-family: 'Raleway', sans-serif;
+  margin: .5em;
+  color: #94DACA;
+  background-color: #2F4858;
+  height: 2em;
+  font-weight: bold;
 }
 
 .error{
   border: 3px solid #de5632;
 }
+
+/* Log In/Sign Up Form */
 
 .toggleSignUp{
   color:#65b6be;
@@ -285,23 +349,28 @@ input[type=submit]{
   width: 100%;
 }
 
+.profile .posts{
+  padding: 0 4em;
+}
+
+.profile .author{
+  display: none;
+}
+
 /* Cities */
 .citiesContainer{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 450px auto;
 }
 .cityNav{
+  grid-column-start: 1;
   width: 450px;
   background-color: #94DACA;
   text-align: center;
-  height: 89vh;
+  height: 100vh;
   z-index: 998;
   overflow: scroll;
-  position: absolute;
-  left: 0;
-  top: 11vh;
+  padding-top: 100px;
 }
 
 .cityLink{
@@ -341,14 +410,102 @@ input[type=submit]{
 }
 
 .currentCity{
-  position: absolute;
-  top: 11vh;
-  height: 89vh;
+  grid-column-start: 2;
+  height: 100vh;
   overflow: scroll;
-  width: 60%;
+  padding: 3em;
   /* z-index: -1; */
 }
 
+.currentCity header{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.currentCity header>div{
+  width: 50%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .currentCity img{
-  max-width: 40%;
+  width: 100%;
+}
+
+.cityTitle{
+  text-align: left;
+}
+
+.cityTitle h1{
+  text-align: left;
+}
+
+.addPost{
+  align-self: flex-end;
+}
+
+
+/* POSTS */
+article{
+  border: 1px solid #94DACA;
+  border-radius: 2px;
+  padding: 3em;
+  overflow: auto;
+  max-width: 75vw;
+  margin: 100px auto;
+}
+
+section article{
+  margin: 3em auto;
+}
+
+.profile .postImgContainer{
+  display: none;
+}
+.postImgContainer{
+  width: 150px;
+  height: 150px;
+  border-radius: 2px;
+  overflow: hidden;
+  float: left;
+  margin-right: 1em;
+}
+
+#postImg{
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.post{
+
+}
+
+.posts{
+  margin-top: 0;
+}
+
+.posts article{
+  margin-top: 1em;
+}
+
+.author{
+  font-size: 1.1em;
+}
+
+.postDate{
+  color: #94DACA;
+  text-transform: uppercase;
+  font-size: .75em;
+  font-weight: bold;
+}
+.postContent{
+  margin-top: .5em;
+}
+
+.readMore{
+  float: right;
 }

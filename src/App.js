@@ -69,7 +69,7 @@ toggleSignUp=()=>{
 //Regex for Forms
 
 isOnlyLettersOrNumbers(str){
-  const alphanumericRegex = new RegExp("/^[a-zA-Z0-9]+$/");
+  const alphanumericRegex = new RegExp("^[a-zA-Z0-9_]*$");
   return alphanumericRegex.test(str)
 }
 
@@ -84,8 +84,7 @@ isValidPassword(str){
 }
 
 isValidEmail(str){
-  const emailRegex = new RegExp(`	
-  ^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$`);
+  const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
   return emailRegex.test(str);
 }
 
@@ -113,18 +112,21 @@ isValidEmail(str){
         <div className="popUp authPopUp">
           <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
           <div className="logInPopUp">
-            <Login {...this.props} setCurrentUser={this.setCurrentUser} />
+            <Login {...this.props}
+              showPopUp={this.showPopUp}
+               setCurrentUser={this.setCurrentUser} />
             <p>Need an account? <span className="toggleSignUp" onClick={this.toggleSignUp}>Sign Up!</span></p>
 
           </div>
           <div className="signUpPopUp">
-            <SignUp {...this.props} setCurrentUser={this.setCurrentUser} />
+            <SignUp {...this.props}
+              showPopUp={this.showPopUp} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/>
           </div>
         </div>
       }
         <Switch>
         <Route path="/authForms" render={ (props) => <AuthForms {...props} setCurrentUser={this.setCurrentUser} /> }/>
-          <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword} isValidName={this.isValidName}/> }/>
+          <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/> }/>
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
           <Route path='/post/:id' component={Post}/>

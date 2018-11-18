@@ -30,6 +30,7 @@ class Login extends Component{
             // Decode token to get user data
             const decoded = jwt_decode(token);
             // Set current user
+            this.props.showPopUp();
             this.props.setCurrentUser(decoded);
             this.props.history.push(`/profile/${this.state.username}`);
         })

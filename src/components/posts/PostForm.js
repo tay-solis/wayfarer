@@ -16,8 +16,12 @@ class PostForm extends Component{
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.updatePosts = this.updatePosts;
       }
 
+      updatePosts(){
+        this.props.updatePosts();
+      }
     componentDidMount(){
         axios.get(`${rootUrl}/city/all`)
         .then((res)=>{
@@ -36,11 +40,11 @@ class PostForm extends Component{
 
     onFormSubmit(e){
         e.preventDefault();
-
+        console.log(Number(Date.now()))
         let newPost  ={
             title: this.state.title,
             content: this.state.content,
-            postedOn: Date.now(),
+            postedOn: Number(Date.now()),
             city: this.state.city,
             user: this.props.currentUser
         }
@@ -49,7 +53,12 @@ class PostForm extends Component{
             .then((res)=>{
                 console.log(res);
                 this.props.showPopUp();
+                this.updatePosts();
             })
+    }
+
+    updateTopPost(){
+        this.props.updateTopPost();
     }
 
 
@@ -72,12 +81,16 @@ class PostForm extends Component{
                 <select name="city" onChange={this.handleInputChange}>
                     {this.state.cities}
                 </select>
-                Don't see your city? <Link to='/addcity'>Add it here!</Link>
+                <p>Don't see your city? <span className='addCityLink'>Add it here!</span></p>
+
             </div>
 
             }
-                <label htmlFor='title'>Title</label>
-                <input placeholder='Title' type='text' id="title" name="title"  onChange={this.handleInputChange}/>
+            <div className = "inputField">
+              <label htmlFor='title'>Title</label>
+              <input placeholder='Title' type='text' id="title" name="title"  onChange={this.handleInputChange}/>
+            </div>
+
                 <label htmlFor='content'>Share Your Thoughts!</label>
                 <textarea id="content" name="content" onChange={this.handleInputChange}></textarea>
                 <button type='submit'>Create Post</button>

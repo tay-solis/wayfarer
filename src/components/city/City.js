@@ -9,10 +9,19 @@ class City extends Component{
         super();
         this.state ={
             city: null,
-            posts: [],
-            headerStyle: {}
+            posts: null,
+            postCount: 0
         }
         this.fetchData = this.fetchData.bind(this)
+        this.updatePosts = this.updatePosts.bind(this)
+    }
+
+    updatePosts(){
+      let postCount = this.state.postCount++;
+      this.fetchData();
+      this.setState({
+        postCount
+      });
     }
 
     fetchData(){
@@ -30,9 +39,15 @@ class City extends Component{
         })
         axios.get(`${rootUrl}/posts/from/${city}`)
         .then((res)=>{
+          let postCount = res.data.length;
+          if(res.data.length > 0){
+            let posts = <Posts posts={res.data}/>;
             this.setState({
-                posts: res.data
+                posts,
+                postCount
             })
+          }
+
         })
         .catch((err)=>{
             console.log(err);
@@ -48,6 +63,7 @@ class City extends Component{
       this.setState({
         city: null,
         posts: [],
+        postCount: 0
       })
       this.fetchData();
     }
@@ -68,18 +84,28 @@ class City extends Component{
             {!this.state.city && <p>Loading...</p>}
             {this.state.city &&
                 <header>
-                    <img src={`${rootUrl}/${this.state.city.photo}`}/>
+                  <div className="cityTitle">
                     <h1>{this.state.city.name}</h1>
+                    <h2>{this.state.city.country}</h2>
+                    <p>{this.state.postCount} post(s)</p>
+                  </div>
+                  <div className="cityImg">
+                    <img src={`${rootUrl}/${this.state.city.photo}`}/><br/>
                     <button className="addPost" onClick={this.showPopUp}>Got a Travel Tip?</button>
+                  </div>
+
+
+
                 </header>
+
             }
+
             <div className="popUp addPostPopUp">
               <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
-              <PostForm {...this.props} currentUser={this.props.currentUser} showPopUp={this.showPopUp}/>
+              <PostForm {...this.props} currentUser={this.props.currentUser}
+                updatePosts={this.updatePosts} showPopUp={this.showPopUp}/>
             </div>
-            {this.state.posts && this.state.posts.length > 0 &&
-                <Posts posts={this.state.posts}/>
-            }
+            {this.state.posts}
         </main>
         )
     }

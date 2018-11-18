@@ -27,7 +27,7 @@ class Nav extends Component{
                         </li>
                         <li><Link to={`/profile/${this.props.currentUser.username}`}>My Profile</Link></li>
                         <li><Link to={`/cities`}>Explore</Link></li>
-                        <li><span onClick={this.props.handleLogout} to="/">Logout</span></li>
+                        <li><span onClick={this.props.handleLogout} ><Link to="/">Logout</Link></span></li>
                     </ul>
 
                     :
