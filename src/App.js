@@ -78,6 +78,7 @@ isOnlyLettersOrNumbers(str){
   return alphanumericRegex.test(str)
 }
 
+//Validates name. Allows some foreign characters.
 isValidName(str){
   const cityRegex = new RegExp("^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$");
   return cityRegex.test(str);
@@ -93,17 +94,9 @@ isValidEmail(str){
   return emailRegex.test(str);
 }
 
-  render() {
-    console.log('Current User = ', this.state.currentUser);
-    console.log('Authenticated = ', this.state.isAuthenticated);
-
-    const PrivateRoute = ({component: Component, ...rest}) => (
-      <Route {...rest} render={(props) => (
-        this.state.isAuthenticated === true
-          ? <Component {...props} />
-          : <Redirect to='/login' />
-      )} />
-    )
+render() {
+  console.log('Current User = ', this.state.currentUser);
+  console.log('Authenticated = ', this.state.isAuthenticated);
 
 
 
@@ -112,8 +105,9 @@ isValidEmail(str){
 
         <Nav showPopUp={this.showPopUp} currentUser={this.state.currentUser} handleLogout={this.handleLogout} isAuthed={this.state.isAuthenticated}/>
         {
-              !this.props.isAuthed
-              &&
+        !this.props.isAuthed
+        &&
+        //Login and Sign Up popups
         <div className="popUp authPopUp" style={{display:'none'}}>
           <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
           <div className="logInPopUp">
@@ -131,7 +125,7 @@ isValidEmail(str){
           </div>
         </div>
       }
-        <Switch>
+      <Switch>
         <Route path="/authForms" render={ (props) => <AuthForms {...props} setCurrentUser={this.setCurrentUser} /> }/>
           <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/> }/>
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
@@ -143,8 +137,8 @@ isValidEmail(str){
           <Route path='/profile/:username' render={(props)=><Profile {...props} currentUser={this.state.currentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail}/>} />
           <Route path="/" component={ Home }/>
 
-        </Switch>
-      </div>
+      </Switch>
+    </div>
     );
   }
 }

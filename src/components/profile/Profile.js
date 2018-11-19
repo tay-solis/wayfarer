@@ -61,6 +61,8 @@ class Profile extends Component{
         return(
         <main className="profile navRoom">
             {!this.state.user && <p>Loading...</p>}
+
+            {/* Post Header*/}
             {this.state.user &&
             <section className="profileHeader">
               <div className="profilePicContainer">
@@ -71,39 +73,41 @@ class Profile extends Component{
                   <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
                   <h2>Hometown: {this.state.user.city}</h2>
                   <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
-                  {this.state.user && this.props.currentUser && this.props.currentUser.username === this.state.user.username
+
+            {/* If user is viewing their own profile, they can edit their profile or update their profile picture.*/}
+            {this.state.user && this.props.currentUser && this.props.currentUser.username === this.state.user.username
                 &&
                 <div className="editProfileContainer">
                     <div className="editProfilePic popUp" style={{display:'none'}}>
-                    <div className="popUpClose" onClick={this.showEditProfilePic}><i className="far fa-window-close"></i></div>
-                        <ProfilePicForm {...this.props} 
-                        showEditProfilePic={this.showEditProfilePic}
-                        user={this.state.user}
-                        currentUser={this.props.currentUser} 
-                        /> 
-                    </div>
-                    <div className="editProfile popUp" style={{display:'none'}}>
-                    <div className="popUpClose" onClick={this.showEditProfile}><i className="far fa-window-close"></i></div>
-                        <ProfileForm 
-                        {...this.props} 
-                        user={this.state.user} 
-                        showEditProfile={this.showEditProfile}
-                        currentUser={this.props.currentUser} 
-                        isValidName={this.props.isValidName} 
-                        isOnlyLettersOrNumbers={this.props.isOnlyLettersOrNumbers} 
-                        isValidEmail={this.props.isValidEmail}/>
-                    </div>
-                    <div className="postBtns">
-                    <button className="editProfilePicBtn" onClick={this.showEditProfilePic}>Update My Profile Pic</button>
-                    <button className="editProfileBtn" onClick={this.showEditProfile}>Edit My Profile</button>
-                    </div>
-                    
-
-                </div>}
+                        <div className="popUpClose" onClick={this.showEditProfilePic}><i className="far fa-window-close"></i></div>
+                            <ProfilePicForm {...this.props} 
+                            showEditProfilePic={this.showEditProfilePic}
+                            user={this.state.user}
+                            currentUser={this.props.currentUser} 
+                            /> 
+                        </div>
+                        <div className="editProfile popUp" style={{display:'none'}}>
+                            <div className="popUpClose" onClick={this.showEditProfile}><i className="far fa-window-close"></i></div>
+                                <ProfileForm 
+                                {...this.props} 
+                                user={this.state.user} 
+                                showEditProfile={this.showEditProfile}
+                                currentUser={this.props.currentUser} 
+                                isValidName={this.props.isValidName} 
+                                isOnlyLettersOrNumbers={this.props.isOnlyLettersOrNumbers} 
+                                isValidEmail={this.props.isValidEmail}/>
+                            </div>
+                        <div className="postBtns">
+                            <button className="editProfilePicBtn" onClick={this.showEditProfilePic}>Update My Profile Pic</button>
+                            <button className="editProfileBtn" onClick={this.showEditProfile}>Edit My Profile</button>
+                        </div>
+                    </div>}
                 </div>
                 
 
             </section> }
+            
+            {/* Shows User Posts. If there are no posts, displays a message to viewer.*/}
             {this.state.posts && this.state.posts.length > 0 &&
                 <Posts posts={this.state.posts}/>
             }

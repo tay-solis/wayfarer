@@ -1,19 +1,5 @@
 import React, {Component} from 'react'
 
-// const headerFade =()=>{
-//   let index = 1;
-//   const header = document.querySelector('.homeHeader');
-//   setTimeout(()=>{
-//     header.style.backgroundImage = `url('./images/home${index}.jpg')`
-//     if(index == 6){
-//       index = 1;
-//     } else{
-//       index++;
-//     }
-//   }, 100)
-// }
-// 
-// headerFade();
 class Home extends Component{
     render(){
         return(

@@ -6,10 +6,10 @@ import setAuthToken from '../../utils/setAuthToken';
 
 
 
-class Login extends Component{
-    constructor(){
+class Login extends Component {
+    constructor() {
         super()
-        this.state ={
+        this.state = {
             username: '',
             password: ''
         }
@@ -17,29 +17,30 @@ class Login extends Component{
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
-    onFormSubmit(e){
+    onFormSubmit(e) {
         e.preventDefault();
-        axios.post(`${rootUrl}/user/login`, {username: this.state.username, password: this.state.password})
-        .then((res)=>{
-            console.log(res.data)
-            const { token } = res.data;
-            // Save to LocalStorage
-            localStorage.setItem('jwtToken', token);
-            // Set token to Auth Header
-            setAuthToken(token);
-            // Decode token to get user data
-            const decoded = jwt_decode(token);
-            // Set current user
-            this.props.showPopUp();
-            this.props.setCurrentUser(decoded);
-            this.props.history.push(`/profile/${this.state.username}`);
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+        axios.post(`${rootUrl}/user/login`, {
+                username: this.state.username,
+                password: this.state.password
+            })
+            .then((res) => {
+                console.log(res.data)
+                const {
+                    token
+                } = res.data;
+                localStorage.setItem('jwtToken', token);
+                setAuthToken(token);
+                const decoded = jwt_decode(token);
+                this.props.showPopUp();
+                this.props.setCurrentUser(decoded);
+                this.props.history.push(`/profile/${this.state.username}`);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
-    handleInputChange(e){
+    handleInputChange(e) {
         e.preventDefault();
         const target = e.target;
         const value = target.value;
@@ -51,8 +52,8 @@ class Login extends Component{
 
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <form className="LoginForm" onSubmit={this.onFormSubmit}>
                 <div className="inputField">
                     <label htmlFor="username">username</label>

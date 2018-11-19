@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom'
 class PostForm extends Component{
     constructor(props){
         super(props)
-        //sets the initial state via the constructor! that's the constructor's job :)
         this.state = {
           title: ' ',
           content: ' ',
@@ -18,8 +17,8 @@ class PostForm extends Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
       }
-    componentDidMount(){
 
+    componentDidMount(){
         axios.get(`${rootUrl}/city/all`)
         .then((res)=>{
             let city = "";
@@ -33,6 +32,7 @@ class PostForm extends Component{
                 city,
                 editing: false
             })
+            // If on the post's individual page, form becomes an edit form instead of a create form.
             if(this.props.post){
                 let editTitle = document.getElementById('title');
                 let editContent = document.getElementById('content');
@@ -59,8 +59,8 @@ class PostForm extends Component{
             title: this.state.title,
             content: this.state.content,
             city: this.state.city,
-            // user: this.props.currentUser
         }
+        //If editing, make a put request.
         if(this.state.editing){
             console.log(newPost);
             axios.put(`${rootUrl}/posts/edit/${this.props.post._id}`, newPost)
@@ -71,15 +71,16 @@ class PostForm extends Component{
                this.props.history.push(`../profile/${this.props.currentUser.username}`) 
             })
         } else{
+        // If creating, make a post request.
             newPost.postedOn = Number(Date.now());
             newPost.user = this.props.currentUser;
-          axios.post(`${rootUrl}/posts/create`, newPost)
+            axios.post(`${rootUrl}/posts/create`, newPost)
               .then((res)=>{
-                  console.log('posted');
-                  console.log(res)
+                    console.log('posted');
+                    console.log(res)
                     this.showPopUp();
-                  this.updatePosts();
-                  this.setCurrentCity(this.state.city)
+                    this.updatePosts();
+                    this.setCurrentCity(this.state.city)
               })
         }
 

@@ -118,7 +118,7 @@ class SignUp extends Component {
             console.log('Passwords do not match');
         }
 
-        if (!mistakes){
+        if (!mistakes) {
             console.log("new user make")
             let newUser = new FormData();
             let date = new Date();
@@ -142,17 +142,17 @@ class SignUp extends Component {
                     }
                 })
                 .then((res) => {
-                passwordWarning.style.display = "hidden";
-                password2Warning.style.display = "hidden";
-                firstNameWarning.style.display = "hidden";
-                lastNameWarning.style.display = "hidden";
-                cityWarning.style.display = "hidden";
-                emailWarning.style.display = "hidden";
-                usernameWarning.style.display = "hidden";
+                    passwordWarning.style.display = "hidden";
+                    password2Warning.style.display = "hidden";
+                    firstNameWarning.style.display = "hidden";
+                    lastNameWarning.style.display = "hidden";
+                    cityWarning.style.display = "hidden";
+                    emailWarning.style.display = "hidden";
+                    usernameWarning.style.display = "hidden";
 
-                  this.props.toggleSignUp();
-                  this.props.history.push('/login')
-                  console.log('registered')
+                    this.props.toggleSignUp();
+                    this.props.history.push('/login')
+                    console.log('registered')
                 })
                 .catch((err) => {
                     console.log('denied')
@@ -182,65 +182,65 @@ class SignUp extends Component {
     }
 
     render() {
-        return (
-            <form  encType="multipart/form-data"  id="signupForm" onSubmit={this.onFormSubmit}>
+            return ( 
+    <form  encType="multipart/form-data"  id="signupForm" onSubmit={this.onFormSubmit}>
+        <label htmlFor="profilePic">Upload a Profile Picture</label>
+        <input type="file" accept="image/*" required placeholder="Profile Pic" id="profilePic" name="profilePic" onChange={this.handleFileUpload}/>
+        
+        <div className="inputField ">
+            <label htmlFor="firstName">First Name</label>
+            <input type="text" required placeholder="First Name" id="firstName"  name="firstName" onChange={this.handleInputChange}/>
+        </div>
+        <span className="warning firstNameWarning"> </span>
 
-                    <label htmlFor="profilePic">Upload a Profile Picture</label>
-                    <input type="file" accept="image/*" required placeholder="Profile Pic" id="profilePic" name="profilePic" onChange={this.handleFileUpload}/>
-                <div className="inputField ">
-                    <label htmlFor="firstName">First Name</label>
-                    <input type="text" required placeholder="First Name" id="firstName"  name="firstName" onChange={this.handleInputChange}/>
-                </div>
-                <span className="warning firstNameWarning"> </span>
+        <div className="inputField lastNameField">
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" required placeholder="Last Name" id="lastName"  name="lastName" onChange={this.handleInputChange}/>
 
-                <div className="inputField lastNameField">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input type="text" required placeholder="Last Name" id="lastName"  name="lastName" onChange={this.handleInputChange}/>
+        </div>
+        <span className="warning lastNameWarning"> </span>
 
-                </div>
-                <span className="warning lastNameWarning"> </span>
+        <div className="inputField cityField">
+            <label htmlFor="city">Your City</label>
+            <input type="text" required placeholder="Your City" id="city" name="city" onChange={this.handleInputChange}/>
 
-                <div className="inputField cityField">
-                    <label htmlFor="city">Your City</label>
-                    <input type="text" required placeholder="Your City" id="city" name="city" onChange={this.handleInputChange}/>
+        </div>
+        <span className="warning cityWarning"> </span>
 
-                </div>
-                <span className="warning cityWarning"> </span>
+        <div className="inputField emailField">
+            <label htmlFor="email">Email</label>
+            <input type="email" required placeholder="Email" id="email"  name="email" onChange={this.handleInputChange}/>
 
-                <div className="inputField emailField">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" required placeholder="Email" id="email"  name="email" onChange={this.handleInputChange}/>
+        </div>
 
-                </div>
+        <span className="warning emailWarning"> </span>
 
-                <span className="warning emailWarning"> </span>
+        <div className="inputField usernameField">
+            <label htmlFor="usernameSignUp">Username</label>
+            <input type="text" required placeholder="Username" id="usernameSignUp"  name="username" onChange={this.handleInputChange}/>
 
-                <div className="inputField usernameField">
-                    <label htmlFor="usernameSignUp">Username</label>
-                    <input type="text" required placeholder="Username" id="usernameSignUp"  name="username" onChange={this.handleInputChange}/>
+        </div>
+        <span className="warning usernameWarning"> </span>
 
-                </div>
-                <span className="warning usernameWarning"> </span>
+        <div className="inputField passwordField">
+            <label htmlFor="password1">Password</label>
+            <input type="password" required placeholder="Password" id="password1" name="password1" onChange={this.handleInputChange}/>
+        </div>
 
-                <div className="inputField passwordField">
-                    <label htmlFor="password1">Password</label>
-                    <input type="password" required placeholder="Password" id="password1" name="password1" onChange={this.handleInputChange}/>
-                </div>
+        <span className="warning passwordWarning"> </span>
 
-                <span className="warning passwordWarning"> </span>
+        <div className="inputField">
+            <label htmlFor="password2">Re-enter Password</label>
+            <input type="password" required placeholder="Re-enter Password" id="password2"  name="password2" onChange={this.handleInputChange}/>
 
-                <div className="inputField">
-                    <label htmlFor="password2">Re-enter Password</label>
-                    <input type="password" required placeholder="Re-enter Password" id="password2"  name="password2" onChange={this.handleInputChange}/>
+        </div>
 
-                </div>
+        <span className="warning password2Warning"> </span>
 
-                <span className="warning password2Warning"> </span>
-
-                <input type="submit" placeholder="Sign Up!/"/>
-            </form>
-        )
-    }
-}
+        <input type="submit" placeholder="Sign Up!/"/>
+    </form>
+            )
+        }
+}   
 
 export default SignUp

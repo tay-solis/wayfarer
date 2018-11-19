@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 
-class CityLink extends Component{
-    constructor(){
+class CityLink extends Component {
+    constructor() {
         super()
         this.setCurrentCity = this.setCurrentCity.bind(this)
     }
 
-    setCurrentCity(){
+    setCurrentCity() {
         console.log('clicked on ' + this.props.name)
         this.props.setCurrentCity(this.props.name);
     }
-    render(){
-        return(
+    render() {
+        return (
             <div className="cityLink" id={this.props.name} onClick={this.setCurrentCity}>
               <div className="cityLinkImg">
                 <img src={this.props.photo} onClick={this.setCurrentCity}/>

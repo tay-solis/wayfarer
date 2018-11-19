@@ -1,9 +1,5 @@
-import React, {
-    Component
-} from 'react'
-import {
-    rootUrl
-} from '../../config/constants'
+import React, {Component} from 'react'
+import {rootUrl} from '../../config/constants'
 import axios from 'axios'
 
 class ProfileForm extends Component {
@@ -23,6 +19,7 @@ class ProfileForm extends Component {
         this.isValidEmail = this.isValidEmail.bind(this);
     }
 
+    // User Validation
     isValidName(str) {
         return this.props.isValidName(str);
     }
@@ -35,6 +32,7 @@ class ProfileForm extends Component {
         return this.props.isValidEmail(str)
     }
 
+    //Creates a put request after input validation — if the user has entered a field incorrectly, they will receive a warning.
     onFormSubmit(e) {
         e.preventDefault();
         let firstName = document.querySelector('#firstName');
@@ -77,8 +75,8 @@ class ProfileForm extends Component {
             cityWarning.innerText = "Invalid name.";
         }
 
-        if (!mistakes){
-            
+        if (!mistakes) {
+
             let updatedProfile = new FormData();
             updatedProfile.append('firstName', this.state.firstName);
             updatedProfile.append('lastName', this.state.lastName);
@@ -98,12 +96,12 @@ class ProfileForm extends Component {
                     }
                 })
                 .then((res) => {
-                firstNameWarning.style.display = "hidden";
-                lastNameWarning.style.display = "hidden";
-                cityWarning.style.display = "hidden";
-                emailWarning.style.display = "hidden";
-                this.props.showEditProfile();
-                this.props.history.push(`../profile/${this.props.currentUser.username}`) 
+                    firstNameWarning.style.display = "hidden";
+                    lastNameWarning.style.display = "hidden";
+                    cityWarning.style.display = "hidden";
+                    emailWarning.style.display = "hidden";
+                    this.props.showEditProfile();
+                    this.props.history.push(`../profile/${this.props.currentUser.username}`)
                 })
                 .catch((err) => {
                     console.log(err);
@@ -113,7 +111,7 @@ class ProfileForm extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log(this.props.user)
         let editFirstName = document.querySelector('#editFirstName');
         let editLastName = document.querySelector('#editLastName');
@@ -130,7 +128,7 @@ class ProfileForm extends Component {
         editLastName.value = lastName;
         editEmail.value = email;
         editCity.value = city;
-        
+
         this.setState({
             firstName,
             lastName,
@@ -139,6 +137,7 @@ class ProfileForm extends Component {
         })
     }
 
+    //Form handlers.
     handleFileUpload(e) {
         const target = e.target;
         const file = target.files[0];

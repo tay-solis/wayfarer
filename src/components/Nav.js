@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom';
 import {rootUrl} from '../config/constants'
-import axios from 'axios'
 
 class Nav extends Component{
   showPopUp =()=>{
