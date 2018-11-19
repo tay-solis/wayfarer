@@ -63,7 +63,7 @@ class SignUp extends Component {
         let lastNameWarning = document.querySelector(".lastNameWarning");
         let usernameWarning = document.querySelector(".usernameWarning");
         let cityWarning = document.querySelector(".cityWarning");
-        
+
         let mistakes = false;
         if (!this.isValidPassword(this.state.password1)) {
             mistakes = true;
@@ -149,8 +149,8 @@ class SignUp extends Component {
                 cityWarning.style.display = "hidden";
                 emailWarning.style.display = "hidden";
                 usernameWarning.style.display = "hidden";
-                
-                  this.props.showPopUp();
+
+                  this.props.toggleSignUp();
                   this.props.history.push('/login')
                   console.log('registered')
                 })

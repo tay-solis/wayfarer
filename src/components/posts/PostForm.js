@@ -12,49 +12,81 @@ class PostForm extends Component{
           content: ' ',
           city: '',
           cities: null,
-          user: null
+          user: null,
+          editing: false
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
-        this.updatePosts = this.updatePosts;
-      }
-
-      updatePosts(){
-        this.props.updatePosts();
       }
     componentDidMount(){
+
         axios.get(`${rootUrl}/city/all`)
         .then((res)=>{
             let city = "";
             let cities =[]
             for(let i = 0; i < res.data.length; i++){
                 if(i === 0) city = res.data[i].name;
-                cities.push(<option key={i} value ={res.data[i].name}>{res.data[i].name}</option>)
+                cities.push(<option key={i} id={res.data[i].name} value ={res.data[i].name}>{res.data[i].name}</option>)
             }
             this.setState({
                 cities,
-                city
+                city,
+                editing: false
             })
+            if(this.props.post){
+                let editTitle = document.getElementById('title');
+                let editContent = document.getElementById('content');
+                let citySelect = document.getElementById('citySelect')
+                let selectedCity = document.getElementById(`${this.props.post.city.name}`)
+                editTitle.value = this.props.post.title;
+                editContent.value = this.props.post.content;
+                citySelect.value = this.props.post.city;
+                selectedCity.setAttribute('selected', true);
+                this.setState({
+                    title: this.props.post.title,
+                    content: this.props.post.content,
+                    city: this.props.post.city,
+                    editing: true
+                })
+            }
         })
     }
 
+
     onFormSubmit(e){
         e.preventDefault();
-        console.log(Number(Date.now()))
         let newPost  ={
             title: this.state.title,
             content: this.state.content,
-            postedOn: Number(Date.now()),
             city: this.state.city,
-            user: this.props.currentUser
+            // user: this.props.currentUser
         }
-        console.log(newPost)
-        axios.post(`${rootUrl}/posts/create`, newPost)
+        if(this.state.editing){
+            console.log(newPost);
+            axios.put(`${rootUrl}/posts/edit/${this.props.post._id}`, newPost)
             .then((res)=>{
-                console.log(res);
+                console.log('updated');
                 this.props.showPopUp();
-                this.updatePosts();
+                this.setState({editing: false})
+               this.props.history.push(`../profile/${this.props.currentUser.username}`) 
             })
+        } else{
+            newPost.postedOn = Number(Date.now());
+            newPost.user = this.props.currentUser;
+          axios.post(`${rootUrl}/posts/create`, newPost)
+              .then((res)=>{
+                  console.log('posted');
+                  console.log(res)
+                    this.showPopUp();
+                  this.updatePosts();
+                  this.setCurrentCity(this.state.city)
+              })
+        }
+
+    }
+
+    setCurrentCity(name){
+        this.props.setCurrentCity(this.state.city);
     }
 
     updateTopPost(){
@@ -78,7 +110,7 @@ class PostForm extends Component{
             {this.state.cities && this.state.cities.length > 0
             &&
             <div className="citySelection">
-                <select name="city" onChange={this.handleInputChange}>
+                <select id="citySelect" name="city" onChange={this.handleInputChange}>
                     {this.state.cities}
                 </select>
                 <p>Don't see your city? <span className='addCityLink'>Add it here!</span></p>
@@ -93,7 +125,13 @@ class PostForm extends Component{
 
                 <label htmlFor='content'>Share Your Thoughts!</label>
                 <textarea id="content" name="content" onChange={this.handleInputChange}></textarea>
+                {this.state.editing
+                ?
+                <button type='submit'>Edit this Post</button>
+                :
                 <button type='submit'>Create Post</button>
+              }
+
             </form>
         )
     }

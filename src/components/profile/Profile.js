@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {rootUrl} from '../../config/constants'
 import axios from 'axios'
 import Posts from '../posts/Posts'
+import ProfileForm from './ProfileForm'
+import ProfilePicForm from './ProfilePicForm'
 
 class Profile extends Component{
     constructor(){
@@ -10,6 +12,8 @@ class Profile extends Component{
             user: null,
             posts: []
         }
+        this.showEditProfile = this.showEditProfile.bind(this);
+        this.showEditProfilePic = this.showEditProfilePic.bind(this);
     }
 
     componentDidMount(){
@@ -34,6 +38,25 @@ class Profile extends Component{
         })
     }
 
+    showEditProfile(){
+        let popUp = document.querySelector('.editProfile');
+      if(popUp.style.display === 'none'){
+        popUp.style.display = "block";
+      } else {
+        popUp.style.display = "none";
+
+      }
+    }
+    showEditProfilePic(){
+        let popUp = document.querySelector('.editProfilePic');
+      if(popUp.style.display === 'none'){
+        popUp.style.display = "block";
+      } else {
+        popUp.style.display = "none";
+
+      }
+    }
+
     render(){
         return(
         <main className="profile navRoom">
@@ -48,7 +71,37 @@ class Profile extends Component{
                   <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
                   <h2>Hometown: {this.state.user.city}</h2>
                   <span>Joined: {this.state.user.joinDate.substr(0,10)}</span>
+                  {this.state.user && this.props.currentUser && this.props.currentUser.username === this.state.user.username
+                &&
+                <div className="editProfileContainer">
+                    <div className="editProfilePic popUp" style={{display:'none'}}>
+                    <div className="popUpClose" onClick={this.showEditProfilePic}><i className="far fa-window-close"></i></div>
+                        <ProfilePicForm {...this.props} 
+                        showEditProfilePic={this.showEditProfilePic}
+                        user={this.state.user}
+                        currentUser={this.props.currentUser} 
+                        /> 
+                    </div>
+                    <div className="editProfile popUp" style={{display:'none'}}>
+                    <div className="popUpClose" onClick={this.showEditProfile}><i className="far fa-window-close"></i></div>
+                        <ProfileForm 
+                        {...this.props} 
+                        user={this.state.user} 
+                        showEditProfile={this.showEditProfile}
+                        currentUser={this.props.currentUser} 
+                        isValidName={this.props.isValidName} 
+                        isOnlyLettersOrNumbers={this.props.isOnlyLettersOrNumbers} 
+                        isValidEmail={this.props.isValidEmail}/>
+                    </div>
+                    <div className="postBtns">
+                    <button className="editProfilePicBtn" onClick={this.showEditProfilePic}>Update My Profile Pic</button>
+                    <button className="editProfileBtn" onClick={this.showEditProfile}>Edit My Profile</button>
+                    </div>
+                    
+
+                </div>}
                 </div>
+                
 
             </section> }
             {this.state.posts && this.state.posts.length > 0 &&

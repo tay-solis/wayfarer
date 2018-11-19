@@ -50,7 +50,7 @@ class CitiesContainer extends Component{
                 <section className="currentCity">
                     {this.state.currentCity
                     &&
-                    <City {...this.props} name={this.state.currentCity} currentUser={this.props.currentUser}/>
+                    <City {...this.props} setCurrentCity={this.setCurrentCity} name={this.state.currentCity} currentUser={this.props.currentUser}/>
                     }
                 </section>
 

@@ -14,6 +14,7 @@ class City extends Component{
         }
         this.fetchData = this.fetchData.bind(this)
         this.updatePosts = this.updatePosts.bind(this)
+        this.showPopUp = this.showPopUp.bind(this);
     }
 
     updatePosts(){
@@ -90,7 +91,9 @@ class City extends Component{
                     <p>{this.state.postCount} post(s)</p>
                   </div>
                   <div className="cityImg">
-                    <img src={`${rootUrl}/${this.state.city.photo}`}/><br/>
+                    <div className="cityImgContainer">
+                      <img src={`${rootUrl}/${this.state.city.photo}`}/>
+                    </div>
                     <button className="addPost" onClick={this.showPopUp}>Got a Travel Tip?</button>
                   </div>
 
@@ -100,10 +103,12 @@ class City extends Component{
 
             }
 
-            <div className="popUp addPostPopUp">
-              <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
+            <div className="popUp addPostPopUp" style={{display:'none'}}>
+            <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
               <PostForm {...this.props} currentUser={this.props.currentUser}
-                updatePosts={this.updatePosts} showPopUp={this.showPopUp}/>
+                updatePosts={this.updatePosts} 
+                showPopUp={this.showPopUp} 
+                setCurrentCity={this.props.setCurrentCity}/>
             </div>
             {this.state.posts}
         </main>

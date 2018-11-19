@@ -62,8 +62,13 @@ showPopUp =()=>{
 toggleSignUp=()=>{
   let signUpPopUp = document.querySelector('.signUpPopUp');
   let logInPopUp = document.querySelector('.logInPopUp');
-  signUpPopUp.style.display = "block";
-  logInPopUp.style.display = "none";
+  if(logInPopUp.style.display === "block"){
+    signUpPopUp.style.display = "block";
+    logInPopUp.style.display = "none";
+  } else if(signUpPopUp.style.display === "block"){
+    signUpPopUp.style.display = "none";
+    logInPopUp.style.display = "block";
+  }
 }
 
 //Regex for Forms
@@ -109,10 +114,11 @@ isValidEmail(str){
         {
               !this.props.isAuthed
               &&
-        <div className="popUp authPopUp">
+        <div className="popUp authPopUp" style={{display:'none'}}>
           <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
           <div className="logInPopUp">
             <Login {...this.props}
+              style={{display:'none'}}
               showPopUp={this.showPopUp}
                setCurrentUser={this.setCurrentUser} />
             <p>Need an account? <span className="toggleSignUp" onClick={this.toggleSignUp}>Sign Up!</span></p>
@@ -120,7 +126,8 @@ isValidEmail(str){
           </div>
           <div className="signUpPopUp">
             <SignUp {...this.props}
-              showPopUp={this.showPopUp} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/>
+              showPopUp={this.showPopUp} setCurrentUser={this.setCurrentUser}
+              toggleSignUp={this.toggleSignUp} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/>
           </div>
         </div>
       }
@@ -129,11 +136,11 @@ isValidEmail(str){
           <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/> }/>
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
-          <Route path='/post/:id' component={Post}/>
+          <Route path='/post/:id' render={(props)=> <Post {...props} currentUser={this.state.currentUser}/>}/>
           <Route path='/addcity' render={(props) => <CityForm {...props} isValidName={this.isValidName}/> }/>
           <Route path='/city/:name' component={City}/>
           <Route path='/cities' render={(props)=><CitiesContainer {...props} isValidName={this.isValidName} showPopUp={this.showPopUp} currentUser={this.state.currentUser}/>}/>
-          <PrivateRoute path='/profile/:username' component={ Profile } />
+          <Route path='/profile/:username' render={(props)=><Profile {...props} currentUser={this.state.currentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail}/>} />
           <Route path="/" component={ Home }/>
 
         </Switch>

@@ -38,7 +38,7 @@ showPopUp(){
     render(){
         return(
             <aside className="cityNav">
-            <div className="popUp addCityPopUp">
+            <div  className="popUp addCityPopUp" style={{display:'none'}}>
               <div className="popUpClose" onClick={this.showPopUp}><i className="far fa-window-close"></i></div>
               <CityForm isValidName={this.props.isValidName}/>
             </div>
