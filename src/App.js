@@ -8,7 +8,6 @@ import Nav from './components/Nav'
 import Home from './components/Home'
 import SignUp from './components/accounts/SignUp'
 import Login from './components/accounts/Login'
-import AuthForms from './components/accounts/AuthForms'
 import Profile from './components/profile/Profile'
 import PostForm from './components/posts/PostForm'
 import Post from './components/posts/Post'
@@ -126,7 +125,6 @@ render() {
         </div>
       }
       <Switch>
-        <Route path="/authForms" render={ (props) => <AuthForms {...props} setCurrentUser={this.setCurrentUser} /> }/>
           <Route path="/signup" render={ (props) => <SignUp {...props} setCurrentUser={this.setCurrentUser} isValidName={this.isValidName} isOnlyLettersOrNumbers={this.isOnlyLettersOrNumbers} isValidEmail={this.isValidEmail} isValidPassword={this.isValidPassword}/> }/>
           <Route path='/login' render={ (props) => <Login {...props} setCurrentUser={this.setCurrentUser} /> } />
           <Route path='/addpost' render={(props) => <PostForm {...props} currentUser={this.state.currentUser} /> } />/>
